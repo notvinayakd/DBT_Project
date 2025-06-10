@@ -1,0 +1,33 @@
+
+name: Run dbt Project on a Schedule
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # This will run daily at midnight. Adjust as needed.
+
+jobs:
+  dbt-run:
+    runs-on: windows-latest  # Using Windows environment
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Corrected version tag
+
+      - name: Set up Python (only if needed)
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Use the Python version compatible with dbt
+
+      - name: Activate virtual environment and run dbt
+        run: |
+          .\dbt-env\Scripts\activate  # Activate the virtual environment for Windows
+          dbt run  # Or any other dbt command you need, like `dbt test` or `dbt run --models my_model`
+
+      - name: Build dbt docs
+        run: dbt docs generate
+
+      - name: Deploy dbt docs (optional)
+        run: dbt docs serve --host 0.0.0.0
+
+      # Optional: You can add other steps like dbt testing or notifications here
+
