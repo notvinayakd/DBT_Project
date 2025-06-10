@@ -1,0 +1,12 @@
+my_project:               
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: 3.108.133.141        
+      user: postgres    
+      password: enalyticsdb@123
+      port: 9506
+      dbname: eanalytics   
+      schema: intern_test
+      threads: 1
