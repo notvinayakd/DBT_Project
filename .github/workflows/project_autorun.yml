@@ -1,0 +1,37 @@
+name: Run dbt project on a schedule
+ 
+on:
+
+  schedule:
+
+    - cron: '*/1 * * * *'  # This will run every minute
+ 
+jobs:
+
+  dbt-run:
+
+    runs-on: windows-latest  # You can change this if you need a different environment
+
+    steps:
+
+      - name: Checkout code
+
+        uses: actions/checkout@project  # Checkout your repository
+ 
+      - name: Set up Python
+
+        uses: actions/setup-python@v2
+
+        with:
+
+          python-version: '3.x'  # Use the version of Python that fits your dbt version
+ 
+      - name: Run dbt
+
+        run: |
+
+          source venv/bin/activate
+
+          dbt run  # Or any other dbt command you need, like `dbt test` or `dbt run --models my_model`
+
+ 
